@@ -10,7 +10,7 @@ from typing_extensions import Buffer
 
 from extensions import BASEDIR
 
-MODEL_PATH = BASEDIR / "Models"
+MODEL_PATH = BASEDIR / "models"
 
 
 class HerbalIdentificationModel(nn.Module):
