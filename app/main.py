@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import render_template, request
 from markupsafe import Markup
 
 from .model import predict_image
@@ -31,15 +31,3 @@ def predict():
         return render_template(
             "display.html", status=500, result="Internal Server Error"
         )
-
-
-def get_app():
-    app = Flask(__name__)
-    app.route("/", methods=["GET"])(home)
-    app.route("/predict", methods=["POST"])(predict)
-    return app
-
-
-if __name__ == "__main__":
-    app = get_app()
-    app.run(debug=True)

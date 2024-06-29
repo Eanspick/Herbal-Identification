@@ -1,4 +1,5 @@
 import io
+from typing import cast
 
 import torch
 import torchvision.models as models
@@ -55,7 +56,7 @@ def predict_image(img: Buffer, threshold: float = 0.6):
     probs = softmax(yb, dim=1)
     top_prob, top_class = torch.max(probs, dim=1)
     confidence = top_prob.item()
-    prediction = num_classes[top_class[0].item()]
+    prediction = num_classes[cast(int, top_class[0].item())]
     print("\n\n\n\n\n\n\n")
     print(prediction, confidence)
     print("\n\n\n\n\n\n\n")
