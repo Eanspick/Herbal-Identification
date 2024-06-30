@@ -1,37 +1,30 @@
-from typing import Iterable, Sequence
-from ._typing import *
-from .ticker import Formatter, Locator
-from .axis import Axis
-from datetime import date
+from _typeshed import Incomplete
+from matplotlib import cbook as cbook
 
 class ConversionError(TypeError): ...
 
 class AxisInfo:
-    def __init__(
-        self,
-        majloc: Locator = ...,
-        minloc: Locator = ...,
-        majfmt: Formatter = ...,
-        minfmt: Formatter = ...,
-        label: str | None = ...,
-        default_limits: Sequence[date] = ...,
-    ) -> None: ...
+    majloc: Incomplete
+    minloc: Incomplete
+    majfmt: Incomplete
+    minfmt: Incomplete
+    label: Incomplete
+    default_limits: Incomplete
+    def __init__(self, majloc: Incomplete | None = None, minloc: Incomplete | None = None, majfmt: Incomplete | None = None, minfmt: Incomplete | None = None, label: Incomplete | None = None, default_limits: Incomplete | None = None) -> None: ...
 
 class ConversionInterface:
     @staticmethod
-    def axisinfo(unit, axis: Axis) -> AxisInfo: ...
+    def axisinfo(unit, axis) -> None: ...
     @staticmethod
-    def default_units(x, axis: Axis): ...
+    def default_units(x, axis) -> None: ...
     @staticmethod
-    def convert(obj, unit, axis: Axis): ...
-    @staticmethod
-    def is_numlike(x: str) -> bool: ...
+    def convert(obj, unit, axis): ...
 
 class DecimalConverter(ConversionInterface):
     @staticmethod
-    def convert(value: Decimal | Iterable, unit, axis: Axis): ...
+    def convert(value, unit, axis): ...
 
 class Registry(dict):
-    def get_converter(self, x) -> ConversionInterface | None: ...
+    def get_converter(self, x): ...
 
-registry: dict = ...
+registry: Incomplete

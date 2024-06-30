@@ -1,82 +1,75 @@
-from .collections import PolyCollection
-from typing import Literal
-from ._typing import *
-from .backend_bases import Event, MouseEvent, RendererBase
-from .figure import Figure
-from .axes import Axes
-from .artist import Artist, allow_rasterization
+import matplotlib.artist as martist
+import matplotlib.collections as mcollections
+from _typeshed import Incomplete
+from matplotlib import cbook as cbook
+from matplotlib.patches import CirclePolygon as CirclePolygon
 
-class QuiverKey(Artist):
-
-    halign = ...
-    valign = ...
-    pivot = ...
-    def __init__(
-        self,
-        Q: Quiver,
-        X: float,
-        Y: float,
-        U: float,
-        label: str,
-        *,
-        angle: float = 0,
-        coordinates: Literal["axes", "figure", "data", "inches"] = "axes",
-        color: Color = ...,
-        labelsep: float = 0.1,
-        labelpos: Literal["N", "S", "E", "W"] = ...,
-        labelcolor: Color = ...,
-        fontproperties: dict = ...,
-        **kwargs
-    ) -> None: ...
+class QuiverKey(martist.Artist):
+    halign: Incomplete
+    valign: Incomplete
+    pivot: Incomplete
+    Q: Incomplete
+    X: Incomplete
+    Y: Incomplete
+    U: Incomplete
+    angle: Incomplete
+    coord: Incomplete
+    color: Incomplete
+    label: Incomplete
+    labelpos: Incomplete
+    labelcolor: Incomplete
+    fontproperties: Incomplete
+    kw: Incomplete
+    text: Incomplete
+    zorder: Incomplete
+    def __init__(self, Q, X, Y, U, label, *, angle: int = 0, coordinates: str = 'axes', color: Incomplete | None = None, labelsep: float = 0.1, labelpos: str = 'N', labelcolor: Incomplete | None = None, fontproperties: Incomplete | None = None, **kwargs) -> None: ...
     @property
     def labelsep(self): ...
-    @allow_rasterization
-    def draw(self, renderer: RendererBase): ...
-    def set_figure(self, fig: Figure): ...
-    def contains(self, mouseevent: MouseEvent) -> bool: ...
+    stale: bool
+    def draw(self, renderer) -> None: ...
+    def set_figure(self, fig) -> None: ...
+    def contains(self, mouseevent): ...
 
-class Quiver(PolyCollection):
-    def __init__(
-        self,
-        a: Axes,
-        *args,
-        scale: float = ...,
-        headwidth: float = ...,
-        headlength: float = ...,
-        headaxislength: float = ...,
-        minshaft: float = ...,
-        minlength: float = ...,
-        units=...,
-        scale_units=...,
-        angles=...,
-        width: float = ...,
-        color: Color = ...,
-        pivot=...,
-        **kwargs
-    ) -> None: ...
+class Quiver(mcollections.PolyCollection):
+    X: Incomplete
+    Y: Incomplete
+    XY: Incomplete
+    N: Incomplete
+    scale: Incomplete
+    headwidth: Incomplete
+    headlength: Incomplete
+    headaxislength: Incomplete
+    minshaft: Incomplete
+    minlength: Incomplete
+    units: Incomplete
+    scale_units: Incomplete
+    angles: Incomplete
+    width: Incomplete
+    pivot: Incomplete
+    transform: Incomplete
+    polykw: Incomplete
+    def __init__(self, ax, *args, scale: Incomplete | None = None, headwidth: int = 3, headlength: int = 5, headaxislength: float = 4.5, minshaft: int = 1, minlength: int = 1, units: str = 'width', scale_units: Incomplete | None = None, angles: str = 'uv', width: Incomplete | None = None, color: str = 'k', pivot: str = 'tail', **kwargs) -> None: ...
     def get_datalim(self, transData): ...
-    @allow_rasterization
-    def draw(self, renderer: RendererBase): ...
-    def set_UVC(self, U, V, C=...): ...
+    stale: bool
+    def draw(self, renderer) -> None: ...
+    U: Incomplete
+    V: Incomplete
+    Umask: Incomplete
+    def set_UVC(self, U, V, C: Incomplete | None = None) -> None: ...
+    quiver_doc: Incomplete
 
-    quiver_doc = ...
-
-class Barbs(PolyCollection):
-    def __init__(
-        self,
-        ax: Axes,
-        *args,
-        pivot=...,
-        length: float = ...,
-        barbcolor: Color = ...,
-        flagcolor: Color = ...,
-        sizes=...,
-        fill_empty=...,
-        barb_increments=...,
-        rounding=...,
-        flip_barb=...,
-        **kwargs
-    ) -> None: ...
-    def set_UVC(self, U, V, C=...): ...
-    def set_offsets(self, xy): ...
-    barbs_doc = ...
+class Barbs(mcollections.PolyCollection):
+    sizes: Incomplete
+    fill_empty: Incomplete
+    barb_increments: Incomplete
+    rounding: Incomplete
+    flip: Incomplete
+    x: Incomplete
+    y: Incomplete
+    def __init__(self, ax, *args, pivot: str = 'tip', length: int = 7, barbcolor: Incomplete | None = None, flagcolor: Incomplete | None = None, sizes: Incomplete | None = None, fill_empty: bool = False, barb_increments: Incomplete | None = None, rounding: bool = True, flip_barb: bool = False, **kwargs) -> None: ...
+    u: Incomplete
+    v: Incomplete
+    stale: bool
+    def set_UVC(self, U, V, C: Incomplete | None = None) -> None: ...
+    def set_offsets(self, xy) -> None: ...
+    barbs_doc: Incomplete

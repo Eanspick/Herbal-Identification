@@ -1,0 +1,3 @@
+from typing import Iterable
+
+def convert_ttf_to_ps(filename: str, output: object, fonttype: int, glyph_ids: Iterable = ...) -> None: ...

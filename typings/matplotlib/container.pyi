@@ -1,64 +1,33 @@
-from typing import Literal
-
-from matplotlib.artist import Artist
-from ._typing import *
-from .collections import LineCollection
-from .lines import Line2D
-from .patches import Rectangle
-from typing import Type
+from _typeshed import Incomplete
+from matplotlib import cbook as cbook
+from matplotlib.artist import Artist as Artist
 
 class Container(tuple):
-    def __repr__(self) -> str: ...
-    def __new__(cls: Type[Container], *args, **kwargs) -> Container: ...
-    def __init__(self, kl: list[Rectangle], label: str = ...) -> None: ...
-    def remove(self) -> None: ...
-    def get_children(self) -> list[Rectangle]: ...
-
-    get_label = Artist.get_label
-    set_label = Artist.set_label
-    add_callback = Artist.add_callback
-    remove_callback = Artist.remove_callback
-    pchanged = Artist.pchanged
+    def __new__(cls, *args, **kwargs): ...
+    def __init__(self, kl, label: Incomplete | None = None) -> None: ...
+    def remove(self): ...
+    def get_children(self): ...
+    get_label: Incomplete
+    set_label: Incomplete
+    add_callback: Incomplete
+    remove_callback: Incomplete
+    pchanged: Incomplete
 
 class BarContainer(Container):
-
-    patches: list[Rectangle]
-    errorbar: None | ErrorbarContainer
-    datavalues: None | ArrayLike
-    orientation: None | Literal["horizontal", "vertical"]
-
-    def __init__(
-        self,
-        patches: list[Rectangle],
-        errorbar: ErrorbarContainer | None = ...,
-        *,
-        datavalues=...,
-        orientation=...,
-        **kwargs
-    ) -> None: ...
+    patches: Incomplete
+    errorbar: Incomplete
+    datavalues: Incomplete
+    orientation: Incomplete
+    def __init__(self, patches, errorbar: Incomplete | None = None, *, datavalues: Incomplete | None = None, orientation: Incomplete | None = None, **kwargs) -> None: ...
 
 class ErrorbarContainer(Container):
-
-    lines: tuple[Line2D, tuple[Line2D, ...], list[LineCollection]]
-    has_xerr: bool
-    has_yerr: bool
-
-    def __init__(
-        self,
-        lines: tuple[Line2D, tuple[Line2D, ...], list[LineCollection]],
-        has_xerr: bool = ...,
-        has_yerr: bool = ...,
-        **kwargs
-    ) -> None: ...
+    lines: Incomplete
+    has_xerr: Incomplete
+    has_yerr: Incomplete
+    def __init__(self, lines, has_xerr: bool = False, has_yerr: bool = False, **kwargs) -> None: ...
 
 class StemContainer(Container):
-
-    markerline: Line2D
-    stemlines: list[Line2D]
-    baseline: Line2D
-
-    def __init__(
-        self,
-        markerline_stemlines_baseline: tuple[Line2D, list[Line2D], Line2D],
-        **kwargs
-    ) -> None: ...
+    markerline: Incomplete
+    stemlines: Incomplete
+    baseline: Incomplete
+    def __init__(self, markerline_stemlines_baseline, **kwargs) -> None: ...

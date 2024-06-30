@@ -1,15 +1,5 @@
-from .collections import PolyCollection
-from typing import Literal, Sequence
-from ._typing import *
+from _typeshed import Incomplete
 
-__all__ = ["stackplot"]
+__all__ = ['stackplot']
 
-def stackplot(
-    axes,
-    x: ArrayLike,
-    *args,
-    labels: Sequence[str] = ...,
-    colors: Sequence[Color] = ...,
-    baseline: Literal["zero", "sym", "wiggle", "weighted_wiggle"] = ...,
-    **kwargs
-) -> list[PolyCollection]: ...
+def stackplot(axes, x, *args, labels=(), colors: Incomplete | None = None, baseline: str = 'zero', **kwargs): ...

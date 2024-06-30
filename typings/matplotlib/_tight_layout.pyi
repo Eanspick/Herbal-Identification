@@ -1,30 +1,6 @@
-from typing import Sequence
-from .gridspec import SubplotSpec
-from .backend_bases import RendererBase
-from .figure import Figure
-from .axes import Axes, SubplotBase
+from _typeshed import Incomplete
+from matplotlib.font_manager import FontProperties as FontProperties
+from matplotlib.transforms import Bbox as Bbox
 
-def auto_adjust_subplotpars(
-    fig,
-    renderer,
-    nrows_ncols: tuple[int, int],
-    num1num2_list: Sequence[tuple[int, int]],
-    subplot_list: Sequence[SubplotBase],
-    ax_bbox_list=None,
-    pad: float = 1.08,
-    h_pad: float|None = None,
-    w_pad: float|None = None,
-    rect: tuple[float, float, float, float]|None = None,
-) -> dict | None: ...
-def get_renderer(fig: Figure) -> RendererBase: ...
-def get_subplotspec_list(axes_list, grid_spec=None) -> list[SubplotSpec]: ...
-def get_tight_layout_figure(
-    fig: Figure,
-    axes_list: list[Axes],
-    subplotspec_list: list,
-    renderer: RendererBase,
-    pad: float = 1.08,
-    h_pad: float|None = None,
-    w_pad: float|None = None,
-    rect: tuple[float, float, float, float]|None = None,
-) -> SubplotSpec | None: ...
+def get_subplotspec_list(axes_list, grid_spec: Incomplete | None = None): ...
+def get_tight_layout_figure(fig, axes_list, subplotspec_list, renderer, pad: float = 1.08, h_pad: Incomplete | None = None, w_pad: Incomplete | None = None, rect: Incomplete | None = None): ...

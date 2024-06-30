@@ -1,121 +1,44 @@
-from typing import Callable, Iterable, Sequence
-from ._typing import *
-from .transforms import Transform
-from .backend_bases import GraphicsContextBase, RendererBase
+from _typeshed import Incomplete
+from matplotlib.backend_bases import RendererBase as RendererBase
+from matplotlib.path import Path as Path
 
 class AbstractPathEffect:
-    def __init__(self, offset: Sequence[float] = ...) -> None: ...
-    def draw_path(
-        self,
-        renderer: RendererBase,
-        gc: GraphicsContextBase,
-        tpath,
-        affine,
-        rgbFace=...,
-    ): ...
+    def __init__(self, offset=(0.0, 0.0)) -> None: ...
+    def draw_path(self, renderer, gc, tpath, affine, rgbFace: Incomplete | None = None): ...
 
 class PathEffectRenderer(RendererBase):
-    def __init__(
-        self, path_effects: Iterable[AbstractPathEffect], renderer: RendererBase
-    ) -> None: ...
+    def __init__(self, path_effects, renderer) -> None: ...
     def copy_with_path_effect(self, path_effects): ...
-    def draw_path(self, gc: GraphicsContextBase, tpath, affine, rgbFace=...): ...
-    def draw_markers(
-        self,
-        gc: GraphicsContextBase,
-        marker_path,
-        marker_trans: Transform,
-        path,
-        *args,
-        **kwargs
-    ): ...
-    def draw_path_collection(
-        self, gc: GraphicsContextBase, master_transform, paths, *args, **kwargs
-    ): ...
-    def __getattribute__(
-        self, name: str
-    ) -> Callable | list[Stroke | Normal] | RendererBase: ...
+    def draw_path(self, gc, tpath, affine, rgbFace: Incomplete | None = None) -> None: ...
+    def draw_markers(self, gc, marker_path, marker_trans, path, *args, **kwargs): ...
+    def draw_path_collection(self, gc, master_transform, paths, *args, **kwargs): ...
+    def __getattribute__(self, name): ...
 
 class Normal(AbstractPathEffect): ...
 
 class Stroke(AbstractPathEffect):
-    def __init__(self, offset: Sequence[float] = ..., **kwargs) -> None: ...
-    def draw_path(
-        self,
-        renderer: RendererBase,
-        gc: GraphicsContextBase,
-        tpath,
-        affine,
-        rgbFace: Color,
-    ): ...
+    def __init__(self, offset=(0, 0), **kwargs) -> None: ...
+    def draw_path(self, renderer, gc, tpath, affine, rgbFace) -> None: ...
 
-withStroke = ...
+withStroke: Incomplete
 
 class SimplePatchShadow(AbstractPathEffect):
-    def __init__(
-        self,
-        offset: Sequence[float] = ...,
-        shadow_rgbFace: Color = ...,
-        alpha: float = 0.3,
-        rho: float = 0.3,
-        **kwargs
-    ) -> None: ...
-    def draw_path(
-        self,
-        renderer: RendererBase,
-        gc: GraphicsContextBase,
-        tpath,
-        affine,
-        rgbFace: Color,
-    ): ...
+    def __init__(self, offset=(2, -2), shadow_rgbFace: Incomplete | None = None, alpha: Incomplete | None = None, rho: float = 0.3, **kwargs) -> None: ...
+    def draw_path(self, renderer, gc, tpath, affine, rgbFace) -> None: ...
 
-withSimplePatchShadow = ...
+withSimplePatchShadow: Incomplete
 
 class SimpleLineShadow(AbstractPathEffect):
-    def __init__(
-        self,
-        offset: Sequence[float] = ...,
-        shadow_color: Color = "black",
-        alpha: float = 0.3,
-        rho: float = 0.3,
-        **kwargs
-    ) -> None: ...
-    def draw_path(
-        self,
-        renderer: RendererBase,
-        gc: GraphicsContextBase,
-        tpath,
-        affine,
-        rgbFace: Color,
-    ): ...
+    def __init__(self, offset=(2, -2), shadow_color: str = 'k', alpha: float = 0.3, rho: float = 0.3, **kwargs) -> None: ...
+    def draw_path(self, renderer, gc, tpath, affine, rgbFace) -> None: ...
 
 class PathPatchEffect(AbstractPathEffect):
-    def __init__(self, offset: Sequence[float] = ..., **kwargs) -> None: ...
-    def draw_path(
-        self,
-        renderer: RendererBase,
-        gc: GraphicsContextBase,
-        tpath,
-        affine,
-        rgbFace: Color,
-    ): ...
+    patch: Incomplete
+    def __init__(self, offset=(0, 0), **kwargs) -> None: ...
+    def draw_path(self, renderer, gc, tpath, affine, rgbFace) -> None: ...
 
 class TickedStroke(AbstractPathEffect):
-    def __init__(
-        self,
-        offset: Sequence[float] = ...,
-        spacing: float = 10,
-        angle: float = 45,
-        length: float = 1.414,
-        **kwargs
-    ) -> None: ...
-    def draw_path(
-        self,
-        renderer: RendererBase,
-        gc: GraphicsContextBase,
-        tpath,
-        affine,
-        rgbFace: Color,
-    ): ...
+    def __init__(self, offset=(0, 0), spacing: float = 10.0, angle: float = 45.0, length=..., **kwargs) -> None: ...
+    def draw_path(self, renderer, gc, tpath, affine, rgbFace) -> None: ...
 
-withTickedStroke = ...
+withTickedStroke: Incomplete

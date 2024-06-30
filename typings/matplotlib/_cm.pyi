@@ -1,10 +1,6 @@
-from functools import partial
-from typing import Any
+from _typeshed import Incomplete
 
-def cubehelix(
-    gamma: float = 1, s: float = 0.5, r: float = -1.5, h: float = 1
-) -> dict[str, partial]: ...
+def cubehelix(gamma: float = 1.0, s: float = 0.5, r: float = -1.5, h: float = 1.0): ...
 
-gfunc: dict[int, Any] = ...
-
-datad: dict[str, tuple[float, ...]] = ...
+gfunc: Incomplete
+datad: Incomplete

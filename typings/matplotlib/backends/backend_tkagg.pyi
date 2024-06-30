@@ -1,11 +1,10 @@
-from typing import Type
-from matplotlib.transforms import Bbox
-from .backend_agg import FigureCanvasAgg
-from ._backend_tk import FigureCanvasTk, _BackendTk
+from ._backend_tk import FigureCanvasTk as FigureCanvasTk, FigureManagerTk as FigureManagerTk, NavigationToolbar2Tk as NavigationToolbar2Tk, _BackendTk
+from .backend_agg import FigureCanvasAgg as FigureCanvasAgg
+from _typeshed import Incomplete
 
 class FigureCanvasTkAgg(FigureCanvasAgg, FigureCanvasTk):
-    def draw(self)-> None: ...
-    def blit(self, bbox: Bbox = ...)-> None: ...
+    def draw(self) -> None: ...
+    def blit(self, bbox: Incomplete | None = None) -> None: ...
 
 class _BackendTkAgg(_BackendTk):
-    FigureCanvas: Type[FigureCanvasAgg] = FigureCanvasTkAgg
+    FigureCanvas = FigureCanvasTkAgg
