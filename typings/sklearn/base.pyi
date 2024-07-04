@@ -72,7 +72,7 @@ class BiclusterMixin:
 class TransformerMixin(_SetOutputMixin):
     def fit_transform(
         self, X: MatrixLike, y: None | MatrixLike | ArrayLike = None, **fit_params: Any
-    ) -> MatrixLike: ...
+    ) -> ndarray[Any, Any]: ...
 
 class OneToOneFeatureMixin:
     def get_feature_names_out(
