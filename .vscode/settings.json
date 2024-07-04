@@ -1,3 +1,9 @@
 {
-  "cSpell.words": ["softmax", "unsqueeze"]
+  "cSpell.words": [
+    "dtype",
+    "softmax",
+    "thresholded",
+    "unnormalized",
+    "unsqueeze"
+  ]
 }

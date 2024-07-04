@@ -6,7 +6,7 @@ from .main import home, predict
 def get_app():
     app = Flask(__name__)
     app.route("/", methods=["GET"])(home)
-    app.route("/predict", methods=["POST"])(predict)
+    app.route("/predict", methods=["GET", "POST"])(predict)
     return app
 
 

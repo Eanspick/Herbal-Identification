@@ -1,4 +1,4 @@
-from flask import render_template, request
+from flask import redirect, render_template, request
 from markupsafe import Markup
 
 from .model import predict_image
@@ -10,17 +10,18 @@ def home():
 
 
 def predict():
+    if request.method != "POST":
+        return redirect("/")
     try:
         file = request.files["file"]
         img = file.read()
         prediction, confidence = predict_image(img)
-        print(prediction, confidence)
         res = Markup(PLANT_DIC[prediction])
         return render_template(
             "display.html", status=200, result=res, confidence=confidence
         )
     except ValueError as ve:
-        print(ve)
+        print("\n", ve, "\n")
         return render_template(
             "display.html",
             status=400,
