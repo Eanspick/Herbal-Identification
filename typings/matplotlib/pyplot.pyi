@@ -661,7 +661,7 @@ def imshow(
     resample: bool | None = None,
     url: str | None = None,
     data: Incomplete | None = None,
-    **kwargs,
+    **kwargs: Incomplete,
 ) -> AxesImage: ...
 def legend(*args: Any, **kwargs: Any) -> Legend: ...
 def locator_params(
