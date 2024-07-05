@@ -9,7 +9,7 @@ import pandas as pd
 from cv2.typing import MatLike
 from PIL.Image import Image, fromarray
 
-from modules.dataset import DATASET_BASEDIR, DATASET_PROCESSED_DIR
+from .dataset import DATASET_BASEDIR, DATASET_PROCESSED_DIR
 
 KERNEL = np.ones((50, 50), np.uint8)
 
