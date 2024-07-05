@@ -1,19 +1,18 @@
 import io
-from typing import TYPE_CHECKING, Any, cast
+from typing import Any, cast
 
 import torch
 import torchvision.models as models
 import torchvision.transforms as transforms
 from PIL import Image
-from torch import nn
+from torch import Tensor, nn
 from torch.nn.functional import softmax
 from typing_extensions import Buffer
 
 from extensions import BASEDIR
+from src.modules.dataset import NORMALIZE, RESIZE
 from src.modules.device import DEVICE
-
-if TYPE_CHECKING:
-    from torch import Tensor  # noqa: F401
+from src.modules.preprocess import SubtractBackground
 
 MODEL_PATH = BASEDIR / "models"
 
@@ -30,17 +29,15 @@ class HerbalIdentificationModel(nn.Module):
         return out
 
 
-# Define desired height and width
-desired_height = 128
-desired_width = 128
-
-RESIZE = transforms.Resize((desired_height, desired_width))
-NORMALIZE = transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))
-
-# Define transformation
 TRANSFORM: "transforms.Compose[Tensor]" = transforms.Compose(
-    [RESIZE, transforms.ToTensor(), NORMALIZE]
+    [
+        SubtractBackground(),
+        RESIZE,
+        transforms.ToTensor(),
+        NORMALIZE,
+    ]
 )
+
 
 CLASSES = [
     "Augmented Arjun Leaf",
