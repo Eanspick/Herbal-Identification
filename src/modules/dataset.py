@@ -16,6 +16,9 @@ UNIQUE_PLANTS: list[str] = []
 for i in DATASET_AUGMENTED_DIR.glob("*"):
     UNIQUE_PLANTS.append(i.name)
 
+UNIQUE_PLANTS_PROCESSED: list[str] = []
+for i in DATASET_PROCESSED_DIR.glob("*"):
+    UNIQUE_PLANTS_PROCESSED.append(i.name)
 
 FLAVIA_DIR = DATASET_BASEDIR / "Flavia"
 

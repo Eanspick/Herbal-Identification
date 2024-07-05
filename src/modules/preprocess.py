@@ -132,7 +132,6 @@ def subtract_background(image: MatLike):
 def extract_features_file(class_: int, file: Path):
     print(f"Preprocessing file {file.relative_to(DATASET_BASEDIR)}")
     image = cv2.imread(str(file))
-    print(image.shape)
     image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     return extract_features(class_, subtract_background(image))
 
@@ -140,6 +139,19 @@ def extract_features_file(class_: int, file: Path):
 def create_dataset(images: Sequence[tuple[int, Path]]):
     with mp.Pool() as pool:
         results = pool.starmap(extract_features_file, images, chunksize=1)
+        return pd.DataFrame.from_records(results, columns=NAMES)  # type: ignore
+
+
+def extract_features_file_2(class_: int, file: Path):
+    print(f"Preprocessing file {file.relative_to(DATASET_BASEDIR)}")
+    image = cv2.imread(str(file))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+    return extract_features(class_, image)
+
+
+def create_dataset_2(images: Sequence[tuple[int, Path]]):
+    with mp.Pool() as pool:
+        results = pool.starmap(extract_features_file_2, images, chunksize=1)
         return pd.DataFrame.from_records(results, columns=NAMES)  # type: ignore
 
 
