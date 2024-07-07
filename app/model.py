@@ -1,20 +1,21 @@
 import io
-from typing import Any, cast
+from typing import Any
 
 import torch
 import torchvision.models as models
-import torchvision.transforms as transforms
 from PIL import Image
-from torch import Tensor, nn
+from torch import nn
 from torch.nn.functional import softmax
 from typing_extensions import Buffer
 
 from extensions import BASEDIR
-from src.modules.dataset import NORMALIZE, RESIZE
+from src.modules.dataset import TRANSFORM, UNIQUE_PLANTS
 from src.modules.device import DEVICE
-from src.modules.preprocess import SubtractBackground
 
 MODEL_PATH = BASEDIR / "models"
+
+
+class TransformError(Exception): ...
 
 
 class HerbalIdentificationModel(nn.Module):
@@ -27,16 +28,6 @@ class HerbalIdentificationModel(nn.Module):
     def forward(self, xb: Any):
         out = self.network(xb)
         return out
-
-
-TRANSFORM: "transforms.Compose[Tensor]" = transforms.Compose(
-    [
-        SubtractBackground(),
-        RESIZE,
-        transforms.ToTensor(),
-        NORMALIZE,
-    ]
-)
 
 
 CLASSES = [
@@ -61,17 +52,23 @@ model.eval()
 
 def predict_image(img: Buffer, threshold: float = 0.6):
     img_pil = Image.open(io.BytesIO(img))
-    tensor = TRANSFORM(img_pil)
+
+    try:
+        tensor = TRANSFORM(img_pil)
+    except RuntimeError as e:
+        raise TransformError(e) from e
+
     xb = tensor.unsqueeze(0)
     yb = model(xb)
     probs = softmax(yb, dim=1)
     top_prob, top_class = torch.max(probs, dim=1)
     confidence = top_prob.item()
-    index = cast(int, top_class[0].item())
-    prediction = CLASSES[index] if index < len(CLASSES) else "Other"
+    index = int(top_class[0].item())
+    prediction = CLASSES[index] if index < len(CLASSES) else UNIQUE_PLANTS[index]
     print("\n", prediction, confidence, "\n")
 
-    if confidence < threshold or index >= len(CLASSES):
+    # if confidence < threshold or index >= len(CLASSES):+
+    if index >= len(CLASSES):
         raise ValueError("Uploaded image is not recognized as a herbal image.")
 
     return prediction, confidence
