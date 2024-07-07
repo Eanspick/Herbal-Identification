@@ -557,8 +557,8 @@ ul.short_ls li a {
 }
 
 /* about */
-.about-two-grids{
-color: rgb(129, 40, 189);
+.about-two-grids {
+  color: rgb(129, 40, 189);
 }
 .about-oil-w3layouts {
   padding: 3em 1em;
@@ -1218,4 +1218,42 @@ a.move-top {
   .newsletter input[type="email"] {
     width: 100%;
   }
+}
+
+/* Custom */
+
+#drag-n-drop-area {
+  width: 500px;
+  height: 500px;
+  background: #fff;
+  text-align: center;
+  justify-content: center;
+  margin-bottom: 25px;
+}
+
+#img-view {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  font-size: 14px;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  border: 2px dashed #bbb5ff;
+  background: #f7f8ff;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+#img-view img {
+  width: 150px;
+}
+
+#img-view span {
+  display: block;
+  font-size: 12px;
+  color: #777;
+  margin-top: 15px;
 }

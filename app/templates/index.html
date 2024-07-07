@@ -200,9 +200,15 @@
     <div class="row" style="justify-content: center;">
       <form action="{{ url_for('predict') }}" method="POST" enctype=multipart/form-data>
         <div class="form-group text-center">
-          <label for="exampleFormControlFile1"><b>Upload an Herbal Image Only</b></label>
-          <input type="file" name="file" class="form-control-file" id="inputImage" onchange=previewImage(event)
-            required>
+          <label for="inputImage" id="drag-n-drop-area">
+            <input type="file" accept="image/*" name="file" class="form-control-file" id="inputImage" onchange=previewImage(event)
+              required hidden>
+              <div id="img-view">
+                <img src="{{ url_for('static', filename='images/upload.png') }}" alt="Upload Image">
+                <b><p>Drag and drop or click here<br>to upload image</p></b>
+                <span>Upload an Herbal Image Only</span>
+              </div>
+          </label>
           <br />
           <button class="btn btn-primary" type="submit"> Predict </button>
         </div>
@@ -243,16 +249,7 @@
     integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
     crossorigin="anonymous"></script>
 
-  <script>
-    function previewImage(event) {
-      var reader = new FileReader();
-      reader.onload = function () {
-        var output = document.getElementById('output-image')
-        output.src = reader.result;
-      }
-      reader.readAsDataURL(event.target.files[0]);
-    }
-  </script>
+  <script src="{{ url_for('static', filename='js/main.js') }}"></script>
 </body>
 
 </html>
