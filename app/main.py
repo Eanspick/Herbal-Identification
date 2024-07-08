@@ -1,8 +1,7 @@
 from flask import redirect, render_template, request
 from markupsafe import Markup
 
-from .model import TransformError, predict_image
-from .utils import PLANT_DIC
+from .model import PLANT_DICT, TransformError, predict_image
 
 
 def home():
@@ -16,7 +15,7 @@ def predict():
         file = request.files["file"]
         img = file.read()
         prediction, confidence = predict_image(img)
-        res = Markup(render_template(PLANT_DIC[prediction]))
+        res = Markup(render_template(PLANT_DICT[prediction]))
         return render_template(
             "display.html", status=200, result=res, confidence=confidence
         )

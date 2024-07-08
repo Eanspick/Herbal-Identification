@@ -9,7 +9,7 @@ from torch.nn.functional import softmax
 from typing_extensions import Buffer
 
 from extensions import BASEDIR
-from src.modules.dataset import TRANSFORM, UNIQUE_PLANTS
+from src.modules.dataset import TRANSFORM
 from src.modules.device import DEVICE
 
 MODEL_PATH = BASEDIR / "models"
@@ -30,14 +30,18 @@ class HerbalIdentificationModel(nn.Module):
         return out
 
 
-CLASSES = [
-    "Augmented Arjun Leaf",
-    "Augmented Curry Leaf",
-    "Augmented Marsh Pennywort Leaf",
-    "Augmented Mint Leaf",
-    "Augmented Neem Leaf",
-    "Augmented Rubble Leaf",
-]
+PLANT_DICT = {
+    "Arjun Leaf": "inc/arjun_leaf.inc.html",
+    "Curry Leaf": "inc/curry_leaf.inc.html",
+    "Marsh Pennywort Leaf": "inc/marsh_pennywort_leaf.inc.html",
+    "Mint Leaf": "inc/mint_leaf.inc.html",
+    "Neem Leaf": "inc/neem_leaf.inc.html",
+    "Rubble Leaf": "inc/rubble_leaf.inc.html",
+    "Flavia Plant": "inc/z.inc.html",
+    "Random Image": "inc/zz.inc.html",
+}
+
+CLASSES = list(PLANT_DICT)
 
 
 model = HerbalIdentificationModel()
@@ -64,11 +68,11 @@ def predict_image(img: Buffer, threshold: float = 0.6):
     top_prob, top_class = torch.max(probs, dim=1)
     confidence = top_prob.item()
     index = int(top_class[0].item())
-    prediction = CLASSES[index] if index < len(CLASSES) else UNIQUE_PLANTS[index]
+    prediction = CLASSES[index]
     print("\n", prediction, confidence, "\n")
 
     # if confidence < threshold or index >= len(CLASSES):+
-    if index >= len(CLASSES):
-        raise ValueError("Uploaded image is not recognized as a herbal image.")
+    # if index >= len(CLASSES):
+    #     raise ValueError("Uploaded image is not recognized as a herbal image.")
 
     return prediction, confidence
