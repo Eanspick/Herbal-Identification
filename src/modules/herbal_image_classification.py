@@ -17,14 +17,12 @@ class ImageClassificationBase(nn.Module):
     def __init__(self, *args: Any, **kwargs: Any) -> None:
         super().__init__(*args, **kwargs)  # type: ignore
 
-    def training_step(self, batch: Tensor | list[Tensor]):
-        images, labels = batch
+    def training_step(self, images: Tensor, labels: Tensor):
         out = self(images)
         loss = F.cross_entropy(out, labels)
         return loss
 
-    def validation_step(self, batch: Tensor | list[Tensor]):
-        images, labels = batch
+    def validation_step(self, images: Tensor, labels: Tensor):
         out = self(images)
         loss = F.cross_entropy(out, labels)
         acc = accuracy(out, labels)

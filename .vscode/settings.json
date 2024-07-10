@@ -3,6 +3,7 @@
     "dtype",
     "softmax",
     "thresholded",
+    "tqdm",
     "unnormalized",
     "unsqueeze"
   ]
