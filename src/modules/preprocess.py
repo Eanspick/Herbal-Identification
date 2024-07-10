@@ -13,7 +13,7 @@ from .dataset import DATASET_BASEDIR, DATASET_PROCESSED_DIR
 
 KERNEL = np.ones((50, 50), np.uint8)
 
-NAMES = [
+FEATURE_NAMES = [
     "class",
     "area",
     "perimeter",
@@ -35,7 +35,7 @@ NAMES = [
 ]
 
 
-def find_contour(image: MatLike):
+def find_contour(image: MatLike, method: int = cv2.CHAIN_APPROX_SIMPLE):
     grayscale = cv2.cvtColor(image, cv2.COLOR_RGB2GRAY)
 
     blur = cv2.GaussianBlur(grayscale, (55, 55), 0)
@@ -43,7 +43,7 @@ def find_contour(image: MatLike):
         blur, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU
     )
     closing = cv2.morphologyEx(thresholded_image, cv2.MORPH_CLOSE, KERNEL)
-    contours, _ = cv2.findContours(closing, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+    contours, _ = cv2.findContours(closing, cv2.RETR_TREE, method)
 
     contours = list(contours)
     contours.sort(key=cv2.contourArea, reverse=True)
@@ -139,7 +139,7 @@ def extract_features_file(class_: int, file: Path):
 def create_dataset(images: Sequence[tuple[int, Path]]):
     with mp.Pool() as pool:
         results = pool.starmap(extract_features_file, images, chunksize=1)
-        return pd.DataFrame.from_records(results, columns=NAMES)  # type: ignore
+        return pd.DataFrame.from_records(results, columns=FEATURE_NAMES)  # type: ignore
 
 
 def extract_features_file_2(class_: int, file: Path):
@@ -152,7 +152,46 @@ def extract_features_file_2(class_: int, file: Path):
 def create_dataset_2(images: Sequence[tuple[int, Path]]):
     with mp.Pool() as pool:
         results = pool.starmap(extract_features_file_2, images, chunksize=1)
-        return pd.DataFrame.from_records(results, columns=NAMES)  # type: ignore
+        return pd.DataFrame.from_records(results, columns=FEATURE_NAMES)  # type: ignore
+
+
+RCNN_NAMES = ["image", "class", "contours", "bounding_box"]
+
+
+def get_image_data(class_: int, file: Path):
+    print(f"Preprocessing file {file.relative_to(DATASET_BASEDIR)}")
+    image = cv2.imread(str(file))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    contours = find_contour(image, cv2.CHAIN_APPROX_TC89_KCOS)
+    x, y, w, h = cv2.boundingRect(contours)
+    bounding_box = [x, y, x + w, y + h]
+
+    return (file, class_, contours.tolist(), bounding_box)
+
+
+def create_rcnn_dataset(images: Sequence[tuple[int, Path]]):
+    with mp.Pool() as pool:
+        results = pool.starmap(get_image_data, images, chunksize=1)
+        return pd.DataFrame.from_records(results, columns=RCNN_NAMES)  # type: ignore
+
+
+def get_image_data_bin(class_: int, file: Path):
+    print(f"Preprocessing file {file.relative_to(DATASET_BASEDIR)}")
+    image = cv2.imread(str(file))
+    image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+
+    contours = find_contour(image, cv2.CHAIN_APPROX_TC89_KCOS)
+    x, y, w, h = cv2.boundingRect(contours)
+    bounding_box = np.array([x, y, x + w, y + h])
+
+    return np.array([image, class_, contours, bounding_box], dtype=object)
+
+
+def create_rcnn_dataset_bin(images: Sequence[tuple[int, Path]]):
+    with mp.Pool() as pool:
+        results = pool.starmap(get_image_data_bin, images, chunksize=1)
+        return np.array(results)
 
 
 def preprocess_file(class_: str, file: Path):
